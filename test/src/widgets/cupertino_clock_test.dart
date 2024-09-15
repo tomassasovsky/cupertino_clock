@@ -12,16 +12,23 @@ void main() {
     testWidgets(
       'Clock should use default size if none provided',
       (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: ThemeData.dark(),
-            home: const CupertinoAnalogClock(),
-          ),
-        );
+        fakeAsync((async) {
+          tester.pumpWidget(
+            MaterialApp(
+              theme: ThemeData.dark(),
+              home: const CupertinoAnalogClock(),
+            ),
+          );
 
-        final container = tester.widget<Container>(find.byType(Container));
-        // Should not be null since it depends on MediaQuery
-        expect(container.constraints?.maxHeight, isNotNull);
+          // Simulate time passing
+          async
+            ..elapse(const Duration(seconds: 30))
+            ..flushMicrotasks();
+
+          final container = tester.widget<Container>(find.byType(Container));
+          // Should not be null since it depends on MediaQuery
+          expect(container.constraints?.maxHeight, isNotNull);
+        });
       },
     );
 
@@ -36,8 +43,9 @@ void main() {
             ),
           );
 
+          // Simulate time passing
           async
-            ..elapse(const Duration(seconds: 30)) // Simulate time passing
+            ..elapse(const Duration(seconds: 30))
             ..flushMicrotasks();
 
           // This test checks if the timer triggers as expected
