@@ -1,9 +1,12 @@
 name: cupertino_clock
 description: A clock with the Cupertino look and feel.
 version: 0.1.0+1
+repository: https://github.com/tomassasovsky/cupertino_clock.git
+homepage: https://github.com/tomassasovsky/cupertino_clock
+
 environment:
-  sdk: ^3.4.0
-  flutter: ^3.22.0
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
 
 dependencies:
   async: ^2.11.0
