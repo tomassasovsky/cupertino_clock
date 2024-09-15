@@ -1,8 +1,6 @@
 name: cupertino_clock
 description: A clock with the Cupertino look and feel.
 version: 0.1.0+1
-publish_to: none
-
 environment:
   sdk: ^3.4.0
   flutter: ^3.22.0
