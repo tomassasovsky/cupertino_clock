@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:async/async.dart';
-import 'package:cupertino_clock/src/widgets/clock_face_painter.dart';
 import 'package:cupertino_clock/src/widgets/hour_clock_hand.dart';
 import 'package:cupertino_clock/src/widgets/minute_clock_hand.dart';
+import 'package:cupertino_clock/src/widgets/round_clock_face_painter.dart';
 import 'package:cupertino_clock/src/widgets/second_clock_hand.dart';
+import 'package:cupertino_clock/src/widgets/square_clock_face_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -13,11 +15,18 @@ import 'package:timezone/timezone.dart' as tz;
 /// {@endtemplate}
 class CupertinoAnalogClock extends StatefulWidget {
   /// {@macro cupertino_analog_clock}
-  const CupertinoAnalogClock({
+  const CupertinoAnalogClock.round({
     super.key,
     this.size,
     this.location,
-  });
+  }) : _isSquare = false;
+
+  /// {@macro cupertino_analog_clock}
+  const CupertinoAnalogClock.square({
+    super.key,
+    this.size,
+    this.location,
+  }) : _isSquare = true;
 
   /// If this property is null then [size]
   /// value is [MediaQuery.of(context).size.height * 0.3].
@@ -27,6 +36,8 @@ class CupertinoAnalogClock extends StatefulWidget {
   ///
   /// Check out the timezone names from [this link](https://help.syncfusion.com/flutter/calendar/timezone).
   final String? location;
+
+  final bool _isSquare;
 
   @override
   State<CupertinoAnalogClock> createState() => _CupertinoAnalogClockState();
@@ -127,20 +138,26 @@ class _CupertinoAnalogClockState extends State<CupertinoAnalogClock> {
   Widget build(BuildContext context) {
     final size = widget.size ?? MediaQuery.sizeOf(context).height * 0.3;
 
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: const BoxDecoration(shape: BoxShape.circle),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          CustomPaint(
-            size: Size(size, size),
-            painter: ClockFacePainter(clockSize: size),
-          ),
+          if (widget._isSquare)
+            CustomPaint(
+              size: Size(size, size),
+              painter: SquareClockFacePainter(clockSize: size),
+            )
+          else
+            CustomPaint(
+              size: Size(size, size),
+              painter: RoundClockFacePainter(clockSize: size),
+            ),
           ValueListenableBuilder(
             valueListenable: currentMinuteTime,
             builder: (context, value, child) => HourClockHand(
+              extend: widget._isSquare,
               currentTime: value,
               clockSize: size,
             ),
@@ -148,6 +165,7 @@ class _CupertinoAnalogClockState extends State<CupertinoAnalogClock> {
           ValueListenableBuilder(
             valueListenable: currentMinuteTime,
             builder: (context, value, child) => MinuteClockHand(
+              extend: widget._isSquare,
               currentTime: value,
               clockSize: size,
             ),
@@ -155,6 +173,7 @@ class _CupertinoAnalogClockState extends State<CupertinoAnalogClock> {
           ValueListenableBuilder(
             valueListenable: currentSecondTime,
             builder: (context, value, child) => SecondClockHand(
+              extend: widget._isSquare,
               currentTime: value,
               clockSize: size,
             ),

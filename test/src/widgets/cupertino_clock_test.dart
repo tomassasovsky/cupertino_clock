@@ -16,7 +16,7 @@ void main() {
           tester.pumpWidget(
             MaterialApp(
               theme: ThemeData.dark(),
-              home: const CupertinoAnalogClock(),
+              home: const CupertinoAnalogClock.round(),
             ),
           );
 
@@ -39,7 +39,7 @@ void main() {
           tester.pumpWidget(
             MaterialApp(
               theme: ThemeData.dark(),
-              home: const CupertinoAnalogClock(location: 'Europe/London'),
+              home: const CupertinoAnalogClock.round(location: 'Europe/London'),
             ),
           );
 
@@ -60,7 +60,7 @@ void main() {
         fakeAsync((async) {
           tester.pumpWidget(
             const MaterialApp(
-              home: CupertinoAnalogClock(size: 500),
+              home: CupertinoAnalogClock.round(size: 500),
             ),
           );
 

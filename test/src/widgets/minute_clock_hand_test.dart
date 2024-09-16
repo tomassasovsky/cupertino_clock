@@ -10,10 +10,16 @@ void main() {
         final initialTime = DateTime(2022, 1, 1, 10, 10); // 10:10:00
         final laterTime = DateTime(2022, 1, 1, 10, 11, 15); // 10:11:15
 
-        final painter1 =
-            MinuteHandPainter(clockSize: 300, currentTime: initialTime);
-        final painter2 =
-            MinuteHandPainter(clockSize: 300, currentTime: laterTime);
+        final painter1 = MinuteHandPainter(
+          extend: false,
+          clockSize: 300,
+          currentTime: initialTime,
+        );
+        final painter2 = MinuteHandPainter(
+          extend: false,
+          clockSize: 300,
+          currentTime: laterTime,
+        );
 
         expect(painter1.shouldRepaint(painter2), true);
       },
@@ -24,8 +30,16 @@ void main() {
       (tester) async {
         final time = DateTime(2022, 1, 1, 10, 10, 30);
 
-        final painter1 = MinuteHandPainter(clockSize: 300, currentTime: time);
-        final painter2 = MinuteHandPainter(clockSize: 300, currentTime: time);
+        final painter1 = MinuteHandPainter(
+          extend: false,
+          clockSize: 300,
+          currentTime: time,
+        );
+        final painter2 = MinuteHandPainter(
+          extend: false,
+          clockSize: 300,
+          currentTime: time,
+        );
 
         expect(painter1.shouldRepaint(painter2), false);
       },
@@ -43,6 +57,7 @@ void main() {
               body: CustomPaint(
                 key: const Key('MinuteHandPainter'),
                 painter: MinuteHandPainter(
+                  extend: false,
                   clockSize: clockSize,
                   currentTime: time,
                 ),

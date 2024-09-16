@@ -9,10 +9,16 @@ void main() {
       final initialTime = DateTime(2022, 1, 1, 10, 10, 30, 500);
       final laterTime = DateTime(2022, 1, 1, 10, 10, 30, 800);
 
-      final painter1 =
-          SecondHandPainter(clockSize: 300, currentTime: initialTime);
-      final painter2 =
-          SecondHandPainter(clockSize: 300, currentTime: laterTime);
+      final painter1 = SecondHandPainter(
+        extend: false,
+        clockSize: 300,
+        currentTime: initialTime,
+      );
+      final painter2 = SecondHandPainter(
+        extend: false,
+        clockSize: 300,
+        currentTime: laterTime,
+      );
 
       expect(painter1.shouldRepaint(painter2), true);
     });
@@ -21,8 +27,16 @@ void main() {
         (WidgetTester tester) async {
       final time = DateTime(2022, 1, 1, 10, 10, 30, 500);
 
-      final painter1 = SecondHandPainter(clockSize: 300, currentTime: time);
-      final painter2 = SecondHandPainter(clockSize: 300, currentTime: time);
+      final painter1 = SecondHandPainter(
+        extend: false,
+        clockSize: 300,
+        currentTime: time,
+      );
+      final painter2 = SecondHandPainter(
+        extend: false,
+        clockSize: 300,
+        currentTime: time,
+      );
 
       expect(painter1.shouldRepaint(painter2), false);
     });
@@ -39,6 +53,7 @@ void main() {
             body: CustomPaint(
               key: const Key('SecondHandPainter'),
               painter: SecondHandPainter(
+                extend: false,
                 clockSize: clockSize,
                 currentTime: time,
               ),

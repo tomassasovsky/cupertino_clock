@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 /// {@template clock_dashes_painter}
 /// Custom painter for drawing the clock dashes.
 /// {@endtemplate}
-class ClockFacePainter extends CustomPainter {
+class RoundClockFacePainter extends CustomPainter {
   /// {@macro clock_dashes_painter}
-  ClockFacePainter({
+  RoundClockFacePainter({
     required this.clockSize,
   });
 
@@ -107,7 +107,7 @@ class ClockFacePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(ClockFacePainter oldDelegate) {
+  bool shouldRepaint(RoundClockFacePainter oldDelegate) {
     return oldDelegate.clockSize != clockSize;
   }
 }

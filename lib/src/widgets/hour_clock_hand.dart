@@ -8,11 +8,13 @@ class HourClockHand extends StatelessWidget {
   const HourClockHand({
     required this.clockSize,
     required this.currentTime,
+    this.extend = false,
     super.key,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class HourClockHand extends StatelessWidget {
         painter: HourHandPainter(
           clockSize: clockSize,
           currentTime: currentTime,
+          extend: extend,
         ),
       ),
     );
@@ -32,10 +35,12 @@ class HourHandPainter extends CustomPainter {
   HourHandPainter({
     required this.clockSize,
     required this.currentTime,
+    required this.extend,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
   static const buttonSize = 2.0;
   static const handColor = Color(0xfff5f4f9);
@@ -49,10 +54,11 @@ class HourHandPainter extends CustomPainter {
 
     final angle = 2 * pi * (currentTime.hour + currentTime.minute / 60) / 12;
     final center = Offset(size.width / 2, size.height / 2);
-    final lengthToThick = clockSize / 15;
-    final hourHandLength = clockSize / 4;
-    final thinStrokeWidth = clockSize / 75;
-    final thickStrokeWidth = clockSize / 40;
+    final lengthToThick = clockSize / 12;
+    final hourHandLength = extend ? clockSize / 3.5 : clockSize / 4;
+    final thinStrokeWidth = clockSize / 55;
+    final thickStrokeWidth = clockSize / 28;
+    final buttonSize = clockSize / 35;
 
     // Drawing the thin part of the hour hand
     final thinEndPoint = Offset(
@@ -84,12 +90,13 @@ class HourHandPainter extends CustomPainter {
     final buttonPaint = Paint()
       ..color = handColor
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = thickStrokeWidth;
+      ..strokeWidth = buttonSize;
 
     canvas
       ..drawLine(center, thinEndPoint, thinHourHandPaint)
       ..drawLine(thinEndPoint, thickEndPoint, shadowPaint)
       ..drawCircle(center, buttonSize, shadowPaint)
+      ..drawCircle(center, buttonSize, buttonPaint)
       ..drawLine(thinEndPoint, thickEndPoint, thickHourHandPaint)
       ..drawShadow(
         Path()
@@ -97,8 +104,7 @@ class HourHandPainter extends CustomPainter {
         Colors.black.withOpacity(0.5),
         5,
         true,
-      )
-      ..drawCircle(center, thickStrokeWidth, buttonPaint);
+      );
   }
 
   @override

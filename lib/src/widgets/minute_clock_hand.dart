@@ -8,11 +8,13 @@ class MinuteClockHand extends StatelessWidget {
   const MinuteClockHand({
     required this.clockSize,
     required this.currentTime,
+    this.extend = false,
     super.key,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class MinuteClockHand extends StatelessWidget {
         painter: MinuteHandPainter(
           clockSize: clockSize,
           currentTime: currentTime,
+          extend: extend,
         ),
       ),
     );
@@ -32,12 +35,13 @@ class MinuteHandPainter extends CustomPainter {
   MinuteHandPainter({
     required this.clockSize,
     required this.currentTime,
+    required this.extend,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
-  static const buttonSize = 2.0;
   static const handColor = Color(0xfff5f4f9);
 
   @override
@@ -49,10 +53,11 @@ class MinuteHandPainter extends CustomPainter {
 
     final angle = 2 * pi * (currentTime.minute + currentTime.second / 60) / 60;
     final center = Offset(size.width / 2, size.height / 2);
-    final lengthToThick = clockSize / 15;
-    final handLength = clockSize / 2.35;
-    final thinStrokeWidth = clockSize / 75;
-    final thickStrokeWidth = clockSize / 40;
+    final lengthToThick = clockSize / 12;
+    final handLength = extend ? clockSize / 2 : clockSize / 2.35;
+    final thinStrokeWidth = clockSize / 55;
+    final thickStrokeWidth = clockSize / 28;
+    final buttonSize = clockSize / 32.5;
 
     // Drawing the thin part of the hour hand
     final thinEndPoint = Offset(
@@ -87,18 +92,17 @@ class MinuteHandPainter extends CustomPainter {
       ..strokeWidth = thickStrokeWidth;
 
     canvas
+      ..drawCircle(center, buttonSize, shadowPaint)
       ..drawLine(center, thinEndPoint, thinHandPaint)
       ..drawLine(thinEndPoint, thickEndPoint, shadowPaint)
-      ..drawCircle(center, buttonSize, shadowPaint)
       ..drawLine(thinEndPoint, thickEndPoint, thickHandPaint)
       ..drawShadow(
-        Path()
-          ..addOval(Rect.fromCircle(center: center, radius: thickStrokeWidth)),
+        Path()..addOval(Rect.fromCircle(center: center, radius: buttonSize)),
         Colors.black.withOpacity(0.5),
         5,
         true,
       )
-      ..drawCircle(center, thickStrokeWidth, buttonPaint);
+      ..drawCircle(center, buttonSize, buttonPaint);
   }
 
   @override

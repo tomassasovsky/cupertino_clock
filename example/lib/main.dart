@@ -12,8 +12,9 @@ class CustomClockExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
-          child: CupertinoAnalogClock(size: 500),
+          child: CupertinoAnalogClock.square(size: 500),
         ),
       ),
       debugShowCheckedModeBanner: false,

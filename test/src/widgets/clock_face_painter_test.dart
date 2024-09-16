@@ -1,4 +1,4 @@
-import 'package:cupertino_clock/src/widgets/clock_face_painter.dart';
+import 'package:cupertino_clock/src/widgets/round_clock_face_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,8 +7,8 @@ void main() {
     testWidgets(
       'Painter should redraw when clock size changes',
       (tester) async {
-        final painter1 = ClockFacePainter(clockSize: 200);
-        final painter2 = ClockFacePainter(clockSize: 300);
+        final painter1 = RoundClockFacePainter(clockSize: 200);
+        final painter2 = RoundClockFacePainter(clockSize: 300);
 
         expect(painter1.shouldRepaint(painter2), true);
       },
@@ -17,8 +17,8 @@ void main() {
     testWidgets(
       'Painter should not redraw when the clock size is unchanged',
       (tester) async {
-        final painter1 = ClockFacePainter(clockSize: 200);
-        final painter2 = ClockFacePainter(clockSize: 200);
+        final painter1 = RoundClockFacePainter(clockSize: 200);
+        final painter2 = RoundClockFacePainter(clockSize: 200);
 
         expect(painter1.shouldRepaint(painter2), false);
       },
@@ -33,7 +33,7 @@ void main() {
             home: Scaffold(
               body: CustomPaint(
                 key: const Key('ClockFacePainter'),
-                painter: ClockFacePainter(clockSize: 300),
+                painter: RoundClockFacePainter(clockSize: 300),
                 child: const SizedBox(width: 300, height: 300),
               ),
             ),

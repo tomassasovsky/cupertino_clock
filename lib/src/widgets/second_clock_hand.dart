@@ -8,11 +8,13 @@ class SecondClockHand extends StatelessWidget {
   const SecondClockHand({
     required this.clockSize,
     required this.currentTime,
+    this.extend = false,
     super.key,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class SecondClockHand extends StatelessWidget {
         painter: SecondHandPainter(
           clockSize: clockSize,
           currentTime: currentTime,
+          extend: extend,
         ),
       ),
     );
@@ -32,12 +35,13 @@ class SecondHandPainter extends CustomPainter {
   SecondHandPainter({
     required this.clockSize,
     required this.currentTime,
+    required this.extend,
   });
 
   final double clockSize;
   final DateTime currentTime;
+  final bool extend;
 
-  static const buttonSize = 3.0;
   static const buttonColor = Colors.black;
   static const secondHandColor = Color(0xffefa02c);
 
@@ -47,8 +51,9 @@ class SecondHandPainter extends CustomPainter {
         2 * pi * (currentTime.second + currentTime.millisecond / 1000) / 60;
 
     final center = Offset(size.width / 2, size.height / 2);
-    final secondHandLength = clockSize / 2.2;
-    final strokeWidthSecond = clockSize / 200;
+    final secondHandLength = extend ? clockSize / 2 : clockSize / 2.2;
+    final strokeWidthSecond = clockSize / 175;
+    final buttonSize = clockSize / 115;
 
     final secondPaint = Paint()
       ..color = secondHandColor
@@ -74,7 +79,7 @@ class SecondHandPainter extends CustomPainter {
         ),
         secondPaint,
       )
-      ..drawCircle(center, buttonSize + strokeWidthSecond * 2, secondPaint)
+      ..drawCircle(center, buttonSize + strokeWidthSecond * 1.8, secondPaint)
       ..drawCircle(center, buttonSize, buttonPaint);
   }
 
