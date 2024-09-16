@@ -1,6 +1,6 @@
 name: cupertino_clock
 description: An analog clock that looks and feels the same as iPhone's analog clock from Standby Mode.
-version: 0.1.0+1
+version: 1.0.0+1
 repository: https://github.com/tomassasovsky/cupertino_clock.git
 homepage: https://github.com/tomassasovsky/cupertino_clock
 

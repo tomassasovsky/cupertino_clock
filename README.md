@@ -74,7 +74,7 @@ void main() {
       theme: ThemeData.dark(),
       home: Scaffold(
         body: Center(
-          child: CupertinoClock(
+          child: CupertinoClock.round(
             size: 300,
             location: 'America/New_York',
           ),
